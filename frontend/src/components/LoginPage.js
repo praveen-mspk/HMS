@@ -30,7 +30,8 @@ function LoginPage() {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/api/auth/login", {
+      const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8080/api";
+      const response = await fetch(`${BASE_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: enteredEmail, password: enteredPassword })
