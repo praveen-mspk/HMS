@@ -137,7 +137,7 @@ function AdminDashboard() {
           <button className="logout-btn" onClick={handleLogout}>Sign Out</button>
         </div>
       </nav>
-
+      // Main Body
       {/* Main */}
       <main className="main-content">
         {alert && <div className={`alert alert-${alert.type}`}>{alert.msg}</div>}
