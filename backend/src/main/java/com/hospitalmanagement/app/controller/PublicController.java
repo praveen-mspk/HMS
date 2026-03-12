@@ -1,8 +1,12 @@
 package com.hospitalmanagement.app.controller;
 
+import com.hospitalmanagement.app.entity.Appointment;
+import com.hospitalmanagement.app.entity.AppointmentStatus;
+import com.hospitalmanagement.app.entity.AvailableSlot;
 import com.hospitalmanagement.app.entity.Role;
 import com.hospitalmanagement.app.entity.User;
 import com.hospitalmanagement.app.repository.UserRepository;
+import com.hospitalmanagement.app.repository.AppointmentRepository;
 import com.hospitalmanagement.app.repository.AvailableSlotRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -32,24 +36,21 @@ public class PublicController {
         return ResponseEntity.ok(userRepository.findByRole(Role.DOCTOR));
     }
 
-    private final com.hospitalmanagement.app.repository.AppointmentRepository appointmentRepository;
+    private final AppointmentRepository appointmentRepository;
 
     @GetMapping("/doctors/{doctorId}/slots")
     public ResponseEntity<?> getDoctorSlots(@PathVariable Long doctorId) {
         User doctor = userRepository.findById(doctorId)
                 .orElseThrow(() -> new RuntimeException("Doctor not found"));
         
-        // Fetch all slots defined for the doctor
-        List<com.hospitalmanagement.app.entity.AvailableSlot> allSlots = slotRepository.findByDoctor(doctor);
+        List<AvailableSlot> allSlots = slotRepository.findByDoctor(doctor);
         
-        // Fetch all non-cancelled appointments for the doctor
-        List<com.hospitalmanagement.app.entity.Appointment> appointments = appointmentRepository.findByDoctor(doctor)
+        List<Appointment> appointments = appointmentRepository.findByDoctor(doctor)
                 .stream()
-                .filter(a -> !a.getStatus().equals(com.hospitalmanagement.app.entity.AppointmentStatus.CANCELLED))
+                .filter(a -> !a.getStatus().equals(AppointmentStatus.CANCELLED))
                 .collect(java.util.stream.Collectors.toList());
 
-        // Filter out slots that match an existing appointment's date and start time
-        List<com.hospitalmanagement.app.entity.AvailableSlot> availableSlots = allSlots.stream()
+        List<AvailableSlot> availableSlots = allSlots.stream()
                 .filter(slot -> appointments.stream().noneMatch(appt -> 
                     appt.getAppointmentDate().equals(slot.getDate()) && 
                     appt.getStartTime().equals(slot.getStartTime())

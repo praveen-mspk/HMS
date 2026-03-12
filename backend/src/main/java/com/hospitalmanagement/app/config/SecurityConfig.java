@@ -37,7 +37,6 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Allow localhost for dev, and read FRONTEND_URL from environment for production
         String frontendUrl = System.getenv("FRONTEND_URL");
         if (frontendUrl != null && !frontendUrl.isEmpty()) {
             configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", frontendUrl));

@@ -29,7 +29,7 @@ function PatientDashboard() {
     const email = localStorage.getItem("email");
     try {
       const res = await fetch(`${API}/appointments`, {
-        credentials: "include",
+        credentials: "include", 
         headers: {
           "X-User-Email": email,
           "X-User-Role": role

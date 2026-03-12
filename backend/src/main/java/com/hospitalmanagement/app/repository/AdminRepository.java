@@ -1,8 +1,3 @@
-// package com.hospitalmanagement.app.repository;
-
-// public class AdminRepository {
-    
-// }
 
 package com.hospitalmanagement.app.repository;
 

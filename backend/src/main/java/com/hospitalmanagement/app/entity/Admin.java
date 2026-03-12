@@ -1,15 +1,13 @@
-// package com.hospitalmanagement.app.entity;
-
-// public class Admin {
-    
-// }
-
 
 package com.hospitalmanagement.app.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "admins")
 public class Admin {
 
@@ -21,16 +19,6 @@ public class Admin {
     private String email;
     private String password;
 
-    // Constructors
-    public Admin() {}
-
-    public Admin(String name, String email, String password) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
-
-    // Getters & Setters
     public Long getId() { return id; }
 
     public String getName() { return name; }
